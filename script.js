@@ -161,7 +161,8 @@ document.addEventListener("DOMContentLoaded", () => {
             `;
         }
 
-        const toolsList = project.tools || ["SolidWorks", "AutoCAD", "Fusion 360", "3D Printing"];
+        const rawTools = project.tools || ["SolidWorks", "AutoCAD", "Fusion 360", "3D Printing"];
+        const toolsList = Array.isArray(rawTools) ? rawTools : [rawTools];
         const toolsHTML = toolsList.map(tool => `<span class="tool-badge">${tool}</span>`).join('');
 
         card.innerHTML = `
@@ -175,6 +176,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 <h3 class="project-title">${project.title}</h3>
                 <p class="project-details">${project.description}</p>
                 <div class="tools-used">
+                    <span style="font-weight: 600; width: 100%;">Tools Used:</span>
                     ${toolsHTML}
                 </div>
                 <button class="btn-shrink">Hide</button>
@@ -271,7 +273,9 @@ document.addEventListener("DOMContentLoaded", () => {
         carouselTrack.addEventListener("click", (e) => {
             if (e.target.tagName === 'IMG' && card.classList.contains("expanded")) {
                 e.stopPropagation(); // prevent card events
-                currentLightboxImages = project.images;
+                const pIndex = card.dataset.index;
+                const pItem = projects[pIndex];
+                currentLightboxImages = pItem.images;
                 currentLightboxIndex = currentSlide;
                 
                 if (currentLightboxImages.length <= 1) {
@@ -286,5 +290,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 lightbox.classList.add('active');
             }
         });
+    });
+
+    // Close expanded card when clicking outside
+    document.addEventListener("click", (e) => {
+        if (activeCard && !activeCard.contains(e.target) && !e.target.closest('#lightbox')) {
+            const shrinkBtn = activeCard.querySelector('.btn-shrink');
+            if (shrinkBtn) shrinkBtn.click();
+        }
     });
 });
