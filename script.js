@@ -234,15 +234,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const executeTransition = (action) => {
             if (document.startViewTransition) {
-                document.startViewTransition(() => {
+                const transition = document.startViewTransition(() => {
                     action();
-                }).ready.then(() => {
+                });
+                
+                transition.finished.then(() => {
                     if (card.classList.contains("expanded")) {
-                        setTimeout(() => {
-                            const rect = card.getBoundingClientRect();
-                            const bodyRect = document.body.getBoundingClientRect().top;
-                            window.scrollTo({ top: rect.top - bodyRect - 100, behavior: "smooth" });
-                        }, 50);
+                        const rect = card.getBoundingClientRect();
+                        const targetY = rect.top + window.scrollY - 100;
+                        window.scrollTo({ top: targetY, behavior: "smooth" });
                     }
                 });
             } else {
@@ -250,8 +250,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (card.classList.contains("expanded")) {
                     setTimeout(() => {
                         const rect = card.getBoundingClientRect();
-                        const bodyRect = document.body.getBoundingClientRect().top;
-                        window.scrollTo({ top: rect.top - bodyRect - 100, behavior: "smooth" });
+                        const targetY = rect.top + window.scrollY - 100;
+                        window.scrollTo({ top: targetY, behavior: "smooth" });
                     }, 100);
                 }
             }
