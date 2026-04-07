@@ -241,6 +241,23 @@ a:hover {
     animation: fadeIn 0.5s ease;
 }
 
+.tools-used {
+    display: none;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    animation: fadeIn 0.5s ease;
+}
+
+.tool-badge {
+    background: rgba(0, 173, 181, 0.15);
+    color: var(--teal-primary);
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    border: 1px solid rgba(0, 173, 181, 0.3);
+}
+
 .btn-shrink {
     display: none;
     align-self: flex-start;
@@ -295,7 +312,12 @@ a:hover {
 }
 
 .project-card.expanded .project-details,
+.project-card.expanded .tools-used,
 .project-card.expanded .btn-shrink {
+    display: flex;
+}
+
+.project-card.expanded .project-details {
     display: block;
 }
 
@@ -354,4 +376,84 @@ a:hover {
 @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
+}
+
+/* Lightbox styles */
+.lightbox {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 0.3s ease;
+}
+
+.lightbox.active {
+    display: flex;
+}
+
+.lightbox-img {
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+.lightbox-close {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    color: var(--teal-primary);
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color var(--transition-speed);
+}
+
+.lightbox-close:hover {
+    color: var(--teal-hover);
+}
+
+/* Make hoverable carousel images change mouse cursor when expanded */
+.project-card.expanded .carousel-slide img {
+    cursor: zoom-in;
+    pointer-events: auto; /* Enable clicking on the image when expanded */
+}
+
+/* Lightbox Navigation Buttons */
+.lightbox-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    border: none;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 1.5rem;
+    transition: background 0.2s;
+    z-index: 2001;
+}
+
+.lightbox-btn:hover {
+    background: var(--teal-primary);
+}
+
+.lightbox-btn.prev {
+    left: 20px;
+}
+
+.lightbox-btn.next {
+    right: 20px;
 }

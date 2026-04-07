@@ -1,35 +1,78 @@
 document.addEventListener("DOMContentLoaded", () => {
     const portfolioGrid = document.getElementById("portfolioGrid");
 
+    // Lightbox Setup
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    const lightboxClose = document.querySelector('.lightbox-close');
+    const lightboxPrev = document.querySelector('.lightbox-btn.prev');
+    const lightboxNext = document.querySelector('.lightbox-btn.next');
+
+    let currentLightboxImages = [];
+    let currentLightboxIndex = 0;
+
+    const updateLightboxImage = () => {
+        if (currentLightboxImages.length > 0) {
+            lightboxImg.src = currentLightboxImages[currentLightboxIndex];
+        }
+    };
+
+    lightboxClose.addEventListener('click', () => lightbox.classList.remove('active'));
+    lightbox.addEventListener('click', (e) => {
+        if (e.target !== lightboxImg && e.target !== lightboxPrev && e.target !== lightboxNext) {
+            lightbox.classList.remove('active');
+        }
+    });
+
+    if (lightboxPrev && lightboxNext) {
+        lightboxPrev.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (currentLightboxImages.length > 0) {
+                currentLightboxIndex = (currentLightboxIndex - 1 + currentLightboxImages.length) % currentLightboxImages.length;
+                updateLightboxImage();
+            }
+        });
+
+        lightboxNext.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (currentLightboxImages.length > 0) {
+                currentLightboxIndex = (currentLightboxIndex + 1) % currentLightboxImages.length;
+                updateLightboxImage();
+            }
+        });
+    }
+
     // Dummy project data
     const projects = [
         {
             id: 1,
-            title: "Mechanical Gear Assembly",
-            description: "A precision-engineered mechanical gear assembly designed for high-stress applications. Modeled with incredibly tight tolerances to ensure maximum durability and seamless power transmission. Features optimized tooth profiles and lightweight structural cutouts.",
+            title: "3D Printable Numpad",
+            description: "A Placeholder Description for the Numpad",
             images: [
-                "https://placehold.co/800x600/2a2a2a/008080?text=Gear+Assembly+1",
-                "https://placehold.co/800x600/3a3a3a/008080?text=Gear+Assembly+2",
-                "https://placehold.co/800x600/2a2a2a/008080?text=Gear+Assembly+3"
+                "./Projects/Numpad/Numpad1.png",
+                "./Projects/Numpad/Numpad2.png",
+                "./Projects/Numpad/Numpad3.png"
             ]
         },
         {
             id: 2,
-            title: "Aerospace Turbine Hub",
-            description: "Advanced turbine hub concept for next-generation aerospace engines. The design incorporates complex airfoil sweeping logic and thermal expansion joints. Utilizing titanium alloy representations for stress testing and computational fluid dynamics simulations.",
+            title: "3D Printable Laptop Stand",
+            description: "A Placeholder description for the laptop Stand",
             images: [
-                "https://placehold.co/800x600/2a2a2a/008080?text=Turbine+Hub+1",
-                "https://placehold.co/800x600/3a3a3a/008080?text=Turbine+Hub+2"
+                "./Projects/KumikoLaptopStand/1.png",
+				"./Projects/KumikoLaptopStand/2.png",
+				"./Projects/KumikoLaptopStand/3.png"
             ]
         },
         {
             id: 3,
-            title: "Automotive Suspension",
-            description: "Double wishbone suspension system for performance terrain vehicles. This assembly minimizes unsprung mass while maintaining extreme rigidity under harsh impact loading. Features adjustable coilover mounts and custom fabricated control arms.",
+            title: "3D Printable Fidget Gear Ring",
+            description: "A Placeholder description for the gear Ring",
             images: [
-                "https://placehold.co/800x600/2a2a2a/008080?text=Suspension+1",
-                "https://placehold.co/800x600/3a3a3a/008080?text=Suspension+2",
-                "https://placehold.co/800x600/2a2a2a/008080?text=Suspension+3"
+                "./Projects/GearRing/1.png",
+				"./Projects/GearRing/2.png",
+				"./Projects/GearRing/3.jpg",
+				"./Projects/GearRing/4.jpg"
             ]
         },
         {
@@ -118,6 +161,9 @@ document.addEventListener("DOMContentLoaded", () => {
             `;
         }
 
+        const toolsList = project.tools || ["SolidWorks", "AutoCAD", "Fusion 360", "3D Printing"];
+        const toolsHTML = toolsList.map(tool => `<span class="tool-badge">${tool}</span>`).join('');
+
         card.innerHTML = `
             <div class="carousel-container">
                 <div class="carousel-track">
@@ -128,6 +174,9 @@ document.addEventListener("DOMContentLoaded", () => {
             <div class="project-info">
                 <h3 class="project-title">${project.title}</h3>
                 <p class="project-details">${project.description}</p>
+                <div class="tools-used">
+                    ${toolsHTML}
+                </div>
                 <button class="btn-shrink">Hide</button>
             </div>
         `;
@@ -216,6 +265,26 @@ document.addEventListener("DOMContentLoaded", () => {
         btnShrink.addEventListener("click", (e) => {
             e.stopPropagation();
             executeTransition(() => toggleCardState(true));
+        });
+
+        // Lightbox image click functionality
+        carouselTrack.addEventListener("click", (e) => {
+            if (e.target.tagName === 'IMG' && card.classList.contains("expanded")) {
+                e.stopPropagation(); // prevent card events
+                currentLightboxImages = project.images;
+                currentLightboxIndex = currentSlide;
+                
+                if (currentLightboxImages.length <= 1) {
+                    if (lightboxPrev) lightboxPrev.style.display = 'none';
+                    if (lightboxNext) lightboxNext.style.display = 'none';
+                } else {
+                    if (lightboxPrev) lightboxPrev.style.display = 'flex';
+                    if (lightboxNext) lightboxNext.style.display = 'flex';
+                }
+
+                updateLightboxImage();
+                lightbox.classList.add('active');
+            }
         });
     });
 });
