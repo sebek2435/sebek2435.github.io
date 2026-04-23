@@ -104,6 +104,70 @@ a:hover {
     animation: fadeInUp 1s ease;
 }
 
+/* Tech Stack Icons */
+.tech-stack {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-top: 2rem;
+    animation: fadeInUp 1.2s ease;
+}
+
+.tech-icon-wrapper {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.tech-icon {
+    width: 32px;
+    height: 32px;
+    transition: transform 0.2s ease, filter 0.2s ease;
+    filter: drop-shadow(0 0 5px rgba(0, 173, 181, 0.2));
+}
+
+.tech-icon-wrapper:hover .tech-icon {
+    transform: translateY(-5px);
+    filter: drop-shadow(0 0 10px rgba(0, 173, 181, 0.6));
+}
+
+.tech-tooltip {
+    position: absolute;
+    bottom: 120%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--teal-primary);
+    color: var(--bg-color);
+    padding: 6px 10px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s ease;
+    pointer-events: none;
+}
+
+.tech-tooltip::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: var(--teal-primary) transparent transparent transparent;
+}
+
+.tech-icon-wrapper:hover .tech-tooltip {
+    opacity: 1;
+    visibility: visible;
+    bottom: 135%;
+}
+
 /* Portfolio Grid */
 .portfolio-section {
     padding: 4rem 2%; /* Small margins */
