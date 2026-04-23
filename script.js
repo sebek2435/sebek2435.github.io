@@ -108,9 +108,9 @@ document.addEventListener("DOMContentLoaded", () => {
             description: "The goal of this project was to turn my favorite IEMs into a low-latency wireless setup by salvaging the internals from a pair of gaming earbuds. I used Fusion 360 to design the hooks, focusing on making them as light and compact as possible while still squeezing in a larger 130mAh battery for better runtime. I cut down some IEM cables and soldered them onto the PCBs which were held tight by the 3D printed housing. I also built a custom charging case that fits the original electronics and has enough room to store the hooks with the IEMs still attached. It’s a bit bigger than a standard case, but it's still comparable to other wireless hooks on the market and much more convenient for my specific setup. This is still an ongoing project; I’m currently refining the design to further reduce the footprint and improve the overall assembly as I test it out in daily use.",
 			tools: ["Fusion 360", "3D Printer"],
             images: [
-                "./Projects/EarHook+Case/1.png",
-                "./Projects/EarHook+Case/2.jpg",
-                "./Projects/EarHook+Case/3.jpg"
+                "./Projects/EarHook+Case/1.webp",
+                "./Projects/EarHook+Case/2.webp",
+                "./Projects/EarHook+Case/3.webp"
             ]
         },
         {
