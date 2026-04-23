@@ -142,7 +142,8 @@ document.addEventListener("DOMContentLoaded", () => {
             description: "For this project, my team designed a small-scale wind turbine for a power-generation challenge, ultimately taking joint 1st place. We tested our prototype in a wind tunnel to see how effectively it could spin a motor to charge a battery. After the results came in, my theory was that we were limited by a hardware bottleneck—likely the motor’s peak voltage output or the battery’s charging threshold as both the top teams hit a similar \"performance ceiling.\" It was an awesome experience in collaborative design, aerodynamic testing, and seeing how theoretical models perform under real-world physical stress.",
 			tools: ["Solidworks"],
             images: [
-                "./Projects/WindTurbine/1.png"
+                "./Projects/WindTurbine/1.png",
+				"./Projects/WindTurbine/2.webp"
             ]
         },
     ];
